@@ -9,7 +9,7 @@
     .sheet {
       padding-top: 10px;
     }
-    
+
     .branding-below {
       bottom: 56px;
       top: 0;
@@ -56,7 +56,7 @@
     </div>
 
     <div class="sidebar bottom">
-      <img alt="Add-on logo" class="logo" src="http://www.technodabble.com/Icon64.png" width="27" height="27">
+      <img alt="Add-on logo" class="logo" src="https://www.technodabble.com/Icon64.png" width="27" height="27">
       <span class="gray branding-text">Embed-a-Cell by <a href="http://technodabble.com">Technodabble</a></span>
     </div>
 
@@ -72,7 +72,7 @@
         $('#clear-all').click(clearAll);
         reloadData();
       });
-      
+
       function reloadData() {
         $("#sheets").empty();
         google.script.run
@@ -127,12 +127,12 @@
             .withUserObject(this)
             .clearLinks();
       }
-      
+
       function addCell(event) {
         var sheetId = event.data.sheetId;
         addCellToSheet(sheetId, "");
       }
-        
+
       function addCellToSheet(sheetId, cell) {
         var count = parseInt($('#' + sheetId).attr('count'));
         $('#' + sheetId).attr('count', ++count);
@@ -142,7 +142,7 @@
           $('#' + sheetId + '-' + count + '-embed').click({sheetId: sheetId, count: count}, embed);
         }
       }
-      
+
       function embed(event) {
         var sheetId = event.data.sheetId;
         var count = event.data.count;
@@ -163,7 +163,7 @@
             .withUserObject(this)
             .choose(sheetId, cell);
       }
-      
+
       function refresh() {
         this.disabled = true;
         google.script.run

@@ -38,12 +38,12 @@ function showSidebar() {
 function choose(sheetId, cell) {
   var sheet = SpreadsheetApp.openById(sheetId);
   var value = sheet.getRangeByName(cell).getDisplayValue();
-  
+
   var doc = DocumentApp.getActiveDocument();
   var cursor = doc.getCursor();
   var element = cursor.getSurroundingText();
   var offset = cursor.getSurroundingTextOffset();
-  
+
   cursor.insertText(value);
   recordNamedRange(doc, element, offset, offset + value.length - 1, sheetId, cell);
 }
@@ -60,15 +60,15 @@ function refresh() {
         var parts = props.getProperty(keys[i]).split(",");
         var sheetId = parts[0];
         var cell = parts[1];
-        
+
         var sheet = SpreadsheetApp.openById(sheetId);
         var value = sheet.getRangeByName(cell).getDisplayValue();
-        
+
         var rangeElement = range.getRange().getRangeElements()[0];
         var text = rangeElement.getElement().asText();
         text.deleteText(rangeElement.getStartOffset(), rangeElement.getEndOffsetInclusive());
         text.insertText(rangeElement.getStartOffset(), value);
-        
+
         // Record a new range because deleting the text in the range effectively deletes the range.
         recordNamedRange(doc, text, rangeElement.getStartOffset(), rangeElement.getStartOffset() + value.length -1, sheetId, cell);
       }
@@ -94,7 +94,7 @@ function getSavedData() {
       if (parts.length > 1) {
         cell = parts[1];
       }
-    
+
       if (!(sheetId in data)) {
         var sheet = SpreadsheetApp.openById(sheetId);
         var sheetData = {name: sheet.getName(), url: sheet.getUrl(), cells: []}
@@ -115,7 +115,7 @@ function getSavedData() {
 function recordNamedRange(doc, element, startOffset, endOffset, sheetId, cell) {
   var range = doc.newRange().addElement(element, startOffset, endOffset).build();
   var namedRange = doc.addNamedRange('embedacell-range', range);
-  
+
   PropertiesService.getDocumentProperties()
       .setProperty("embedacell-" + namedRange.getId(), [sheetId, cell].join(","));
 }
